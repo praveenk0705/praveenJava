@@ -118,7 +118,7 @@ try
             <td><%=result.getString(4) %></td>
             <td><%=result.getString(5) %></td>
             
-            <TD> <a href="#">Delete</a> </TD>
+            <TD> <a href="#">Sell</a> </TD>
             
 
         </tr>
