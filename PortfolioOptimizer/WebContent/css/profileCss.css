@@ -1,0 +1,41 @@
+@CHARSET "ISO-8859-1";
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+body {
+  background: #76b852; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+  background: -moz-linear-gradient(right, #76b852, #8DC26F);
+  background: -o-linear-gradient(right, #76b852, #8DC26F);
+  background: linear-gradient(to left, #76b852, #8DC26F);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
+
+.inline { 
+    display: inline-block; 
+   /*  border: 1px solid black;  */
+    margin:10px;
+    }
+    
+    .boxed {
+  border: 1px solid green ;
+}
+
+.welcome{
+   position:absolute;
+   top:0;
+   right:0;
+   color:black;
+   font-size: 150%;
+  }
+
+.demo{
+	position:absolute;
+    color:red;
+    top:50%;
+   right:0%;
+   background-color: white;
+  
+   
+}​
