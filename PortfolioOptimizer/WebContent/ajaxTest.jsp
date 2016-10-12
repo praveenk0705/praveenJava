@@ -45,7 +45,7 @@
 <br><br>
 </form> -->
 
-
+<div>Check if This is your first buy <input type = "checkbox" name = "firstBuy" id = "firstBuy" ></div>
 <script>
 /* $(function(){
 
@@ -61,14 +61,22 @@
 </script>
 <script type="text/javascript">
 var n = "Praveen";
-$.post("AjaxServlet",
+ $.post("AjaxServlet",
 		  { name: n, time: "2pm" },
-		  function(data){
-		    alert("Data Loaded: " + data);
-		    $("#regTitle").val(data);
+		  function(json){
+		    //alert("Data Loaded: " + data);
+		    $("#regTitle").val(json.txt11);
 		  }
-		);
-</script>
+		); 
+ /* if(document.getElementById('firstBuy').checked) {
+		firstBuy ="true";
+	}
+	else{
+		firstBuy = "false";
+	}
+	window.alert(firstbuy); */
+		
+		</script>
 <input type = "text" id = "regTitle">
 
 </html>

@@ -41,6 +41,7 @@ public class GlobalConnection extends HttpServlet {
 			connection = DriverManager.getConnection(dbUrl, user, password);
 			if(connection!= null){
 				System.out.println("success");
+				connection.setAutoCommit(false);
 			}
 			if(connection==null)
 			{

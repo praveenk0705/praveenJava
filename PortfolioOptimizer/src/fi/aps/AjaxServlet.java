@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Servlet implementation class AjaxServlet
  */
@@ -36,7 +39,22 @@ public class AjaxServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		System.out.println("Inside AjaxServlet");
 		String n = request.getParameter("name");
-		out.print(n);
+		//out.print(n);
+		
+		
+		 JSONObject json = new JSONObject();
+		    try {
+				json.put("txt11", n);
+				json.put("txt21", "achal");
+				System.out.println(json);
+				//out.println(json);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    //json.put("txt22", txt2);
+		    response.setContentType("application/json");
+		    response.getWriter().write(json.toString());
 		
 	
 	}
