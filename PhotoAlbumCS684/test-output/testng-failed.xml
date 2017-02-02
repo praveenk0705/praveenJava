@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite1]">
+  <test name="RemovePhotoTest(failed)">
+    <classes>
+      <class name="TestNGTests.RemovePhotoTest">
+        <methods>
+          <include name="BeforeTest"/>
+          <include name="f"/>
+        </methods>
+      </class> <!-- TestNGTests.RemovePhotoTest -->
+      <class name="TestNGTests.GetUserTest">
+        <methods>
+          <include name="beforeTest"/>
+          <include name="afterTest"/>
+        </methods>
+      </class> <!-- TestNGTests.GetUserTest -->
+      <class name="TestNGTests.CreateAlbumTest">
+        <methods>
+          <include name="beforeTest"/>
+        </methods>
+      </class> <!-- TestNGTests.CreateAlbumTest -->
+      <class name="TestNGTests.AddPhotoTest">
+        <methods>
+          <include name="beforeTest"/>
+          <include name="afterTest"/>
+        </methods>
+      </class> <!-- TestNGTests.AddPhotoTest -->
+    </classes>
+  </test> <!-- RemovePhotoTest(failed) -->
+</suite> <!-- Failed suite [Suite1] -->

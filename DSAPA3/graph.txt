@@ -1,0 +1,14 @@
+LAX   SFO     100
+LAX   ORD     600
+LAX   DFW     600
+SFO   DFW     400
+SFO   ATL      700
+SFO   ORD     200
+ORD   DFW     100
+ORD   ATL      500
+ORD   EWR     600
+ORD   BOS     500
+DFW   ATL     100
+ATL   BOS      200
+ATL   EWR      400
+BOS   EWR     100

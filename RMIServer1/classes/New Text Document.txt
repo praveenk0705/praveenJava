@@ -1,0 +1,1 @@
+insert into room_booking values(1,2,'bb','29-jul-2011',4,'30-jul-2011','29-aug-2011',1000,3,666);

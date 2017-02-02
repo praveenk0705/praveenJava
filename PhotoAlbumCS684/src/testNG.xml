@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1">
+
+  <test name="AddPhotoTest">
+    <classes>
+       <class name="TestNGTests.AddPhotoTest" />
+    </classes>
+  </test>
+  <test name="CreateAlbumTest">
+    <classes>
+       <class name="TestNGTests.CreateAlbumTest" />
+    </classes>
+  </test>
+  <test name="FindPhotoInAlbumTest">
+    <classes>
+       <class name="TestNGTests.FindPhotoInAlbumTest" />
+    </classes>
+  </test>
+  <test name="GetAlbumsTest">
+    <classes>
+       <class name="TestNGTests.GetAlbumsTest" />
+    </classes>
+  </test>
+  <test name="GetUserTest">
+    <classes>
+       <class name="TestNGTests.GetUserTest" />
+    </classes>
+  </test>
+  <test name="RemovePhotoTest">
+    <classes>
+       <class name="TestNGTests.RemovePhotoTest" />
+    </classes>
+  </test>
+  <test name="WriteUserTest">
+    <classes>
+       <class name="TestNGTests.WriteUserTest" />
+    </classes>
+  </test>
+  
+  
+  
+</suite>  	
