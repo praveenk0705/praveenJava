@@ -1,24 +1,18 @@
-<%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@page import="java.sql.*"%>
-<%@page import="java.util.*"%>
+    pageEncoding="ISO-8859-1"%>
+     <%@page import="java.sql.*"%>
+     <%@page import="java.util.*"%>
 <%@page import="fi.aps.CurrencyConversion"%>
 <%@page import="fi.aps.GetCurrentStockPriceFromYahoo"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/profileCss.css" />
-
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Portfolio Optimizer</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- <link href="/PortfolioOptimizer/css/profileCss.css" rel="stylesheet" type="text/css"> -->
-
-
-
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/prettyProfile.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
 </head>
 <div class="welcome">
 	<%
@@ -30,16 +24,8 @@
 	<%=session.getAttribute("userName")%>
 	<a href="logout.jsp">Logout</a>
 </div>
-
 <body>
-
-	<!-- <div >
-		<input type="radio" name="buysell" value="buy"> BUY<br> <input
-			type="radio" name="buysell" value="sell"> SELL<br>
-
-	</div>
- -->
-	<div id="cash">Cash</div>
+<div id="cash">Cash</div>
 	<div>
 		<a href="#" id="depositCash">Deposit Cash</a> <input id="deposit"
 			autocomplete="off" />
@@ -47,11 +33,11 @@
 
 
 
-	<table border="1">
+	<table>
 		<tr>
 
 			<div class='inline'>
-				<td>Choose Stock Index:</td>
+				<tr><td>Choose Stock Index:</td>
 				<td><select id="indexval"
 					onchange="indexSelect(this,document.getElementById('stockname'))">
 						<option>Choose an Index</option>
@@ -66,7 +52,7 @@
 			<div class='inline'>
 				<td>Choose Company:</td>
 				<td><select id="stockname" onchange="getStockName()">
-				</select></td>
+				</select></td></tr>
 			</div>
 
 
@@ -139,13 +125,6 @@
 						purchase history</a>
 				</div>
 			</td>
-			
-			<td>
-
-				<div>
-					<a href="optimize.jsp" id="optimize">Optimize</a>
-				</div>
-			</td>
 
 		</tr>
 
@@ -153,17 +132,13 @@
 
 
 
-	<!-- 	<input type="button" id = "testValidate" value ="validate"  onclick = "testValidate()"/>
-	 --></table>
+		<input type="button" id = "testValidate" value ="validate"  onclick = "testValidate()"/>
+	</table>
 
-	<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- -->
 	<% Connection connection = null;
 ResultSet result = null;
 PreparedStatement stSelect = null; 
 PreparedStatement zeroNo = null;
-PreparedStatement insertTotalStockCurrentValue = null;
-
 
 
 ////////////////
@@ -233,8 +208,17 @@ try
 	}
 
 %>
-	<table border="1">
-		<th>Stock Index</th>
+	
+
+<section>
+  
+ 
+  <div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead>
+        <tr>
+       <th>Stock Index</th>
+        <th>Stock Index</th>
 		<th>Stock Name</th>
 		<th>Total Price When Purchased(USD)</th>
 		<th>Stock Price When Purchased(USD)</th>
@@ -244,7 +228,14 @@ try
 		<th>Stock Price when purchased(Local)</th>
 		<th>Current Total of Stocks(USD)</th>
 		<th>Current Total of Stocks(Local)</th>
-		<% String sname;
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="tbl-content">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tbody>
+      <% String sname;
 Double i = 0.0;
     while(result.next()){
         %>
@@ -360,29 +351,23 @@ Double i = 0.0;
 			<td></td>
 			<td></td>
 			<td>Total value of all the stocks(Current) <%
-			
-			
     out.println(i);	
-			
-			insertTotalStockCurrentValue = connection.prepareStatement("update person set TOTALSTOCKVALUE = ? where uname = 'aps' ");
-			insertTotalStockCurrentValue.setDouble(1, i);
-			insertTotalStockCurrentValue.executeQuery();
-			connection.commit();
-			
     %>
 			</td>
 		</tr>
 		<%
     result.close();
     %>
-	</table>
+        
+      </tbody>
+    </table>
+  </div>
+</section>
+<%
+out.println(i);
+    %>
 
-
-
-
-
-
-	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  -->
 	<h3>Validation:</h3>
 
@@ -429,6 +414,7 @@ Double i = 0.0;
 		{
 			double a = Double.parseDouble(result6.getString(1));
 			double b = Double.parseDouble(result7.getString(1));
+			
 			if(a > (a+b)/10)
 			{	
 			%>
@@ -444,18 +430,31 @@ Double i = 0.0;
 		}
 	result6.close();
 	//result7.close();
-	/// validation update from here....................................................................................................................	
+		
 		while(result8.next())
 		{	
 	
 			double a = Double.parseDouble(result7.getString(1));
 			double b = Double.parseDouble(result8.getString(1));
-			double c = (b/a)*100;
 			
+			if(a*0.7 > b)
+			{ 
 			%>
-	<h4>DOW-30 Stocks is <%=c%>%. </h4>
+	<h4>DOW-30 Stocks less than 70%</h4>
 	<%
-				
+			}
+			else if(a*0.7 < b)
+			{
+			%>
+	<h4>DOW-30 stocks more than 70%</h4>
+	<%
+			}
+			else
+			{
+				System.out.println("3rd Validation sucessful");
+				count++;
+			}
+			
 		}
 	
 		result8.close();
@@ -467,12 +466,17 @@ Double i = 0.0;
 		{
 			double a= Double.parseDouble(result7.getString(1));
 			double b= Double.parseDouble(result9.getString(1));
-			double c = (b/a)*100;
-			 %>
-	<h4>Foreign stocks is <%=c%>%.</h4>
-	<%
-		
 			
+			if(	a*0.3 >	b)
+			{ %>
+	<h4>Foreign stocks less than 30%.</h4>
+	<%
+			}
+			else if (a*0.3 < b)
+			{%>
+	<h4>Foreign stocks more than 30%.</h4>
+	<% 
+			}
 			
 		}
 		result7.close();
@@ -483,15 +487,9 @@ Double i = 0.0;
 		}
 		
 	}
-	
-	// till here..........................................................................................................
 		%>
-		
-		
-		
 	<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  -->
-
 
 
 
@@ -761,12 +759,11 @@ function testValidate(){
 }
 
 </script>
+
 <script type="text/javascript">
 $(window).on("load resize ", function() {
 	  var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
 	  $('.tbl-header').css({'padding-right':scrollWidth});
 	}).resize();
 </script>
-
-
 </html>

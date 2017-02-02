@@ -20,16 +20,15 @@
     </init-param>
     <init-param>
       <param-name>dbUrl</param-name>
-      <param-value>jdbc:oracle:thin:@mydb.ck13xpajnawb.us-west-2.rds.amazonaws.com:1521:orcl</param-value>
-      <!-- mydb.ck13xpajnawb.us-west-2.rds.amazonaws.com -->
+      <param-value>jdbc:oracle:thin:@praveendboraclese.cy222osbnxzg.us-east-1.rds.amazonaws.com:1521:ORCL</param-value>
     </init-param>
     <init-param>
       <param-name>userName</param-name>
-      <param-value>pku5</param-value>
+      <param-value>pku</param-value>
     </init-param>
     <init-param>
       <param-name>password</param-name>
-      <param-value>aapd1234</param-value>
+      <param-value>admin1234</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>

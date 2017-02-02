@@ -31,11 +31,12 @@ body {
   }
 
 .demo{
-	position:absolute;
+	
+  	position:absolute;
     color:red;
-    top:50%;
-   right:0%;
+    top:0%;
+   right:50%;
    background-color: white;
   
    
-}​
+}

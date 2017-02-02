@@ -50,13 +50,18 @@ public class AddToCart extends HttpServlet {
 		String stockName = request.getParameter("stockName");
 		String stockPrice = request.getParameter("stockPrice");
 		String noOfStocks = request.getParameter("noOfStocks");
+		String localPrice = request.getParameter("localPrice");
 		System.out.println("inside add to cart");
 
 		Float priceOfStock = Float.parseFloat(stockPrice);
 		Float intNoOfStocks = Float.parseFloat(noOfStocks);
+		Float localPriceOfStocksWhenPurchased = Float.parseFloat(localPrice);
+		Float TotalPriceWhenPurchased = localPriceOfStocksWhenPurchased * intNoOfStocks ;
 		Float totalPrice = priceOfStock * intNoOfStocks;
+		
 		Date dateobj = new Date();
 		String purchaseDate = dateobj.toString();
+		
 		System.out.println(stockIndex + stockName + stockPrice + noOfStocks+ dateobj);
 
 		Connection connection = null;
@@ -70,17 +75,18 @@ public class AddToCart extends HttpServlet {
 		PreparedStatement insertToTransactionSelect = null;
 		PreparedStatement getIfStockAlreadyExistsSelect = null;
 		PreparedStatement updateTableIfAlreadyExistsSelect = null;
+		PreparedStatement buyHistorySelect = null;
 
 		try {
 			ServletContext context = getServletContext();
 			connection = (Connection) context.getAttribute("globalConnection");
 
 			//checking is stockname already exists
-			getIfStockAlreadyExistsSelect = connection.prepareStatement("select stockname from transactions where stockname = ?");
+			getIfStockAlreadyExistsSelect = connection.prepareStatement("select stockname from addtocart where stockname = ?");
 			getIfStockAlreadyExistsSelect.setString(1, stockName);
 			getIfStockAlreadyExistsResult = getIfStockAlreadyExistsSelect.executeQuery();
 			
-			//updating is stocks already exists
+			//updating transaction table if stocks already exists i.e has been bought once or more
 			updateTableIfAlreadyExistsSelect = connection.prepareStatement("update transactions set noofstocks= noofstocks + ? , totalprice= totalprice + ? where stockname = ?");
 			updateTableIfAlreadyExistsSelect.setFloat(1, intNoOfStocks);
 			updateTableIfAlreadyExistsSelect.setFloat(2, totalPrice);
@@ -88,30 +94,36 @@ public class AddToCart extends HttpServlet {
 			
 			
 			//adding values to transaction table on the click of buy button
-			insertToTransactionSelect = connection.prepareStatement("insert into transactions values (?,?,?,?)");
+			insertToTransactionSelect = connection.prepareStatement("insert into transactions values (?,?,?,?,0)");
 			insertToTransactionSelect.setString(1, stockIndex);
 			insertToTransactionSelect.setString(2, stockName);
 			insertToTransactionSelect.setFloat(3, totalPrice);
 			insertToTransactionSelect.setFloat(4, intNoOfStocks);
 			
-			if(getIfStockAlreadyExistsResult.next()){
-				updateTableIfAlreadyExistsSelect.executeQuery();//if stockname already there the update not insert
-				
-			}
-			else{
-			insertToTransactionSelect.executeQuery();
-			}//executing the add to transaction
+			
 			///////////////////////////////////////////////////////////
+			 buyHistorySelect = connection
+					.prepareStatement("INSERT INTO buyhistory VALUES (?,?,?,?,?,?,?,?)"); //addint to buyhistory
+			buyHistorySelect.setString(1, stockIndex);
+			buyHistorySelect.setString(2, stockName);
+			buyHistorySelect.setFloat(3, totalPrice);
+			buyHistorySelect.setFloat(4, priceOfStock);
+			buyHistorySelect.setFloat(5, intNoOfStocks);
+			buyHistorySelect.setString(6, purchaseDate);
+			buyHistorySelect.setFloat(7, TotalPriceWhenPurchased);
+			buyHistorySelect.setFloat(8, localPriceOfStocksWhenPurchased);
 			
 			
 			stSelect = connection
-					.prepareStatement("INSERT INTO ADDTOCART VALUES (?,?,?,?,?,?)"); //addint to addtocart
+					.prepareStatement("INSERT INTO ADDTOCART VALUES (?,?,?,?,?,?,?,?)"); //addint to addtocart
 			stSelect.setString(1, stockIndex);
 			stSelect.setString(2, stockName);
 			stSelect.setFloat(3, totalPrice);
 			stSelect.setFloat(4, priceOfStock);
 			stSelect.setFloat(5, intNoOfStocks);
 			stSelect.setString(6, purchaseDate);
+			stSelect.setFloat(7, TotalPriceWhenPurchased);
+			stSelect.setFloat(8, localPriceOfStocksWhenPurchased);
 			
 			stSelect2 = connection
 					.prepareStatement("update person set balance = balance - ?");
@@ -129,7 +141,16 @@ public class AddToCart extends HttpServlet {
 			System.out.println(cashBalance);
 
 			if (cashBalance >= totalPrice) {
-
+				
+				if(getIfStockAlreadyExistsResult.next()){
+					updateTableIfAlreadyExistsSelect.executeQuery();//if stockname already there the update not insert
+					
+				}
+				else{
+				insertToTransactionSelect.executeQuery();
+				}//executing the add to transaction
+				
+				buyHistorySelect.executeQuery(); // inserting to buyhistory
 				result = stSelect.executeQuery();//adding to addtocart
 				stSelect2.executeQuery();//updating users balance
 				connection.commit();
@@ -149,7 +170,26 @@ public class AddToCart extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally{
+			 try {
+				result.close();
+				 getCashBalanceResult.close();
+				 getIfStockAlreadyExistsResult.close();
+
+				 stSelect.close();
+				 stSelect2.close();
+				 getcashBalanceStatement.close();
+				 insertToTransactionSelect.close();
+				 getIfStockAlreadyExistsSelect.close();
+				 updateTableIfAlreadyExistsSelect.close();
+				 buyHistorySelect.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 	}
+		
 
 }
+	}

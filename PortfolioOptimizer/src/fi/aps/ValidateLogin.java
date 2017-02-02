@@ -74,14 +74,13 @@ public class ValidateLogin extends HttpServlet {
  		{
  			System.out.println("Database Connection Not Established");
  		}
-		/*finally
+		finally
 		{
 			try
 			{
 				if(result!=null)
 					result.close();
-				if(connection!=null)
-					connection.close();
+				
 				if(stSelect!=null)
 					stSelect.close();
 			}
@@ -89,7 +88,7 @@ public class ValidateLogin extends HttpServlet {
 			{
 				e.printStackTrace();
 			}
-		}*/
+		}
 	}
 
 }

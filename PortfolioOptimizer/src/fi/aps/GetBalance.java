@@ -33,16 +33,29 @@ public class GetBalance extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		ServletContext context = getServletContext();
 		connection = (Connection)context.getAttribute("globalConnection");
-		try {
-			stSelect = connection.prepareStatement("select balance from person");
-			result = stSelect.executeQuery();
-			while (result.next()){
-				out.println(result.getString(1));
+		
+			try {
+				stSelect = connection.prepareStatement("select balance from person");
+				result = stSelect.executeQuery();
+				while (result.next()){
+					out.println(result.getString(1));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			finally{
+				 try {
+					 if(result != null)
+					result.close();
+					 if(stSelect != null)
+					 stSelect.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		
 		
 	
 	}

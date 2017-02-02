@@ -53,6 +53,15 @@ public class DepositCash extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally{
+			 try {
+				result.close();
+				 stSelect.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
